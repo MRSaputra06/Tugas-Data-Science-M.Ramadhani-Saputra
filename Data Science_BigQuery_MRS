@@ -1,0 +1,48 @@
+# SELECT ROUND(AVG(age), 2) AS avg_age FROM telco_churn.customer_demography
+
+# SELECT customer_id, age, gender FROM telco_churn.customer_demography WHERE age > (SELESELECT COUNT(*)
+
+# SELECT COUNT(*) FROM telco_churn.customer_demography WHERE age > (SELECT AVG(age) FROM telco_churn.customer_demography)
+
+# SELECT MIN(age) AS youngest_age, MAX(age) AS oldest_age FROM telco_churn.customer_demography WHERE age > (SELECT ROUND(AVG(age), 2) FROM telco_churn.customer_demography)
+
+# SELECT * FROM telco_churn.customer_status WHERE cltv <= (SELECT AVG(cltv) FROM telco_churn.customer_status) AND status != 'Churned'
+
+#SELECT
+#  status,
+#  COUNT(customer_id) AS total_customer,
+#  ROUND(100 * COUNT(customer_id)/(SELECT COUNT(customer_id) FROM telco_churn.customer_status), 2) AS persentase FROM telco_churn.customer_status GROUP BY status;
+
+#SELECT offer, contract, COUNT(customer_id) AS total_customer
+#FROM telco_churn.telco_services
+#GROUP BY offer, contract;
+
+#WITH temp_offer AS (
+#  SELECT offer,contract, COUNT(customer_id) AS total_customer
+#  FROM telco_churn.telco_services
+#  GROUP BY offer, contract)
+
+#  SELECT * FROM temp_offer
+#  WHERE total_customer = (SELECT MAX(total_customer) FROM temp_offer)
+
+WITH ChurnedCustomers AS (
+    SELECT customer_id
+    FROM telco_churn.telco_services
+    WHERE internet_type = 'Fiber Optic'
+)
+SELECT
+    cd.customer_id,
+    cd.gender,
+    cd.age,
+    ts.tenure_in_months,
+    ts.total_revenue,
+    cs.status
+FROM
+    telco_churn.customer_demography cd
+JOIN
+    telco_churn.customer_status cs ON cd.customer_id = cs.customer_id
+JOIN
+    telco_churn.telco_services ts ON cd.customer_id = ts.customer_id
+WHERE
+    cs.status = 'Churned'
+    AND cd.customer_id IN (SELECT customer_id FROM ChurnedCustomers);
