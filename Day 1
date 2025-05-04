@@ -1,0 +1,25 @@
+# SELECT * from telco_churn.customer_status
+
+# SELECT customer_id, status, churn_reason from telco_churn.customer_status
+
+# SELECT customer_id, cltv AS customer_lifetime_value, status from telco_churn.customer_status
+
+# SELECT distinct satisfaction_score from telco_churn.customer_status
+
+# SELECT distinct status from telco_churn.customer_status
+
+# SELECT distinct churn_category, churn_reason from telco_churn.customer_status
+
+# SELECT * from telco_churn.customer_status limit 5
+
+# SELECT customer_id, status, churn_reason from telco_churn.customer_status limit 10
+
+# SELECT customer_id, cltv AS customer_lifetime_value, status from telco_churn.customer_status limit 3
+
+# SELECT * from telco_churn.customer_status order By customer_id ASC
+
+# SELECT * from telco_churn.customer_status order By cltv DESC
+
+# SELECT * from telco_churn.customer_status order By customer_id ASC, cltv DESC limit 10
+
+SELECT customer_id, cltv AS customer_lifetime_value, status from telco_churn.customer_status order by cltv desc limit 10
