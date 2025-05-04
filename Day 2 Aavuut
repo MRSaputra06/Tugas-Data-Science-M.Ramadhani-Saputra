@@ -1,0 +1,46 @@
+# SELECT * from `telco_churn.telco_services` where phone_service
+
+# SELECT * from `telco_churn.telco_services` where tenure_in_months>30
+
+# SELECT customer_id, tenure_in_months, internet_type from telco_churn.telco_services where internet_type = 'Fiber Optic'
+
+# SELECT customer_id, tenure_in_months, internet_type, total_revenue FROM telco_churn.telco_services WHERE internet_type = 'Fiber Optic' OR tenure_in_months <=30
+
+# SELECT customer_id, internet_type, total_revenue from `telco_churn.telco_services` where internet_type = 'Fiber Optic' order by total_revenue DESC
+
+# SELECT * FROM telco_churn.telco_services WHERE customer_id LIKE '2%' ORDER BY customer_id ASC LIMIT 5
+
+# SELECT customer_id, internet_type, avg_monthly_gb_download FROM `telco_churn.telco_services` WHERE avg_monthly_gb_download BETWEEN 20 AND 30
+
+# SELECT customer_id, offer, total_revenue FROM telco_churn.telco_services WHERE Offer IN ('Offer A', 'Offer E')
+
+# select customer_id, offer, internet_type, total_revenue from telco_churn.telco_services where offer is null
+
+# SELECT customer_id, offer, internet_type, total_revenue FROM telco_churn.telco_services WHERE Offer IN ('Offer A', 'Offer E')
+#  AND internet_type NOT IN ('Fiber Optic', 'DSL')
+
+# SELECT customer_id, monthly_charge, CASE WHEN monthly_charge < 50.2 THEN 'Low Charge' WHEN monthly_charge >= 50.2 AND monthly_charge < 83.2 THEN 'Medium Charge' WHEN monthly_charge >= 83.2 THEN 'High Charge' END AS monthly_charge_type FROM`telco_churn`.telco_services
+
+# SELECT customer_id, offer, internet_type, total_revenue FROM telco_churn.telco_services WHERE offer IS NULL
+
+#SELECT
+#    customer_id,
+#    monthly_charge,
+#    CASE
+#        WHEN monthly_charge < 50.2 THEN 'Low Charge'
+#        WHEN monthly_charge < 83.2 THEN 'Medium Charge'
+#        ELSE 'High Charge'
+#    END AS monthly_charge_type
+#FROM telco_churn.telco_services
+
+SELECT
+    customer_id,
+    phone_service,
+    internet_service,
+    CASE
+        WHEN phone_service = TRUE AND internet_service = TRUE THEN 'Phone & Internet'
+        WHEN phone_service = TRUE AND internet_service = false THEN 'Phone Only'
+        WHEN phone_service = FALSE AND internet_service = TRUE THEN 'Internet Only'
+        ELSE 'No Phone & Internet'
+    END AS phone_internet_type
+FROM telco_churn.telco_services
