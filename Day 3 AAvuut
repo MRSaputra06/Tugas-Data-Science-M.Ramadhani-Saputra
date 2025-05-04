@@ -1,0 +1,72 @@
+# SELECT COUNT(*) AS jumlah_data FROM telco_churn.telco_services
+
+# SELECT SUM(total_revenue) AS total_revenue FROM telco_churn.telco_services
+
+#SELECT 
+#    MIN(tenure_in_months) AS minimum_tenure,
+#   MAX(tenure_in_months) AS maximum_tenure,
+#    AVG(tenure_in_months) AS average_tenure
+#FROM
+#    telco_churn.telco_services
+
+#SELECT
+ # COUNT(DISTINCT CASE WHEN Offer IN ('Offer A', 'Offer B') THEN customer_id END) AS total_offer_A_or_B,
+  #COUNT(DISTINCT CASE WHEN Offer IN ('Offer C', 'Offer D', 'Offer E') THEN customer_id END) AS total_offer_C_or_D_or_E,
+  #COUNT(DISTINCT CASE WHEN Offer IS NULL THEN customer_id END) AS non_offer
+#FROM telco_churn.telco_services
+
+#SELECT internet_type, COUNT(customer_id) AS jumlah_customer 
+#FROM telco_churn.telco_services
+#GROUP BY internet_type
+#ORDER BY jumlah_customer DESC
+
+#SELECT Offer, internet_type, COUNT(customer_id) AS jumlah_customer
+#FROM telco_churn.telco_services
+#GROUP BY Offer, internet_type
+#ORDER BY Offer, internet_type ASC
+
+#SELECT
+#    CASE
+#        WHEN phone_service = TRUE AND internet_service = TRUE THEN 'Phone & Internet'
+#        WHEN phone_service = TRUE AND internet_service = FALSE THEN 'Phone Only'
+#        WHEN phone_service = FALSE AND internet_service = TRUE THEN 'Internet Only'
+#        ELSE 'No Phone & Internet'
+#    END AS phone_internet_type,
+#    COUNT(customer_id) AS total_customer
+#FROM
+#    telco_churn.telco_services
+#GROUP BY
+#    phone_internet_type
+#ORDER BY
+#    total_customer DESC
+
+#SELECT
+ #   CASE
+  #      WHEN phone_service = TRUE AND internet_service != FALSE THEN 'Phone & Internet'
+   #     WHEN phone_service = TRUE AND internet_service = FALSE THEN 'Phone Only'
+    #    WHEN phone_service = FALSE AND internet_service != FALSE THEN 'Internet Only'
+     #   ELSE 'No Phone & Internet'
+    #END AS phone_internet_type,
+    #COUNT(*) AS total_customer,
+    #COUNT(*) * 100 / (SELECT COUNT(*) FROM telco_churn.telco_services) AS percentage#
+#FROM
+ #   telco_churn.telco_services
+#GROUP BY
+#    phone_internet_type
+#ORDER BY
+ #   total_customer DESC
+
+#SELECT number_of_referrals, avg(tenure_in_months) as avg_tenure_in_month
+#FROM telco_churn.telco_services
+#GROUP BY number_of_referrals
+#HAVING avg_tenure_in_month < 40
+
+#SELECT offer, internet_type, COUNT(customer_id) AS jumlah_customer
+#FROM telco_churn.telco_services
+#WHERE offer <> 'None'
+#GROUP BY offer, internet_type
+#HAVING jumlah_customer >= 100
+#ORDER BY offer, internet_type DESC
+
+SELECT customer_id , gender, age from Telco_churn.customer_demography
+where age > (SELECT ROUND(AVG(age), 2) AS avg_age FROM Telco_churn.customer_demography)
